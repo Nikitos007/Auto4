@@ -1,0 +1,31 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Poker Suite" verbose="1">
+
+	<test name="Login Tests">
+		<parameter name="trueUsername" value="admin"></parameter>
+		<parameter name="failUsername" value="admin123"></parameter>
+		<parameter name="truePassword" value="123"></parameter>
+		<parameter name="failPassword" value="12345"></parameter>	
+		<groups>
+			<dependencies>
+				<group name="negative" depends-on="positive" />		
+			</dependencies>          
+        </groups>
+        <classes>
+			<class name="HW4.tests.LoginTests"/>
+		</classes>
+	</test>
+
+	<test name="CRUD User Tests">
+		<classes>
+			<class name="HW4.tests.CRUDUserTests"/>
+		</classes>
+	</test>
+	
+	<test name="Search User Tests">
+		<classes>
+			<class name="HW4.tests.SearchTest"/>
+		</classes>
+	</test>
+ 
+</suite>

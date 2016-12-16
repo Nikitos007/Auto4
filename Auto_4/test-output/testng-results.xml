@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="3" passed="3">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="40032" started-at="2016-12-16T10:02:21Z" finished-at="2016-12-16T10:03:01Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="40032" started-at="2016-12-16T10:02:21Z" finished-at="2016-12-16T10:03:01Z">
+      <class name="HW4.tests.DragDroppTest">
+        <test-method status="PASS" signature="beforeTest()[pri:0, instance:HW4.tests.DragDroppTest@c038203]" name="beforeTest" is-config="true" duration-ms="11682" started-at="2016-12-16T12:02:21Z" finished-at="2016-12-16T12:02:32Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeTest -->
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:HW4.tests.DragDroppTest@c038203]" name="beforeMethod" is-config="true" duration-ms="301" started-at="2016-12-16T12:02:32Z" finished-at="2016-12-16T12:02:33Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method status="PASS" signature="dragAndDropTest()[pri:0, instance:HW4.tests.DragDroppTest@c038203]" name="dragAndDropTest" duration-ms="2111" started-at="2016-12-16T12:02:33Z" finished-at="2016-12-16T12:02:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- dragAndDropTest -->
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:HW4.tests.DragDroppTest@c038203]" name="beforeMethod" is-config="true" duration-ms="252" started-at="2016-12-16T12:02:35Z" finished-at="2016-12-16T12:02:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method status="PASS" signature="dragSortReverseTest()[pri:0, instance:HW4.tests.DragDroppTest@c038203]" name="dragSortReverseTest" duration-ms="17997" started-at="2016-12-16T12:02:35Z" finished-at="2016-12-16T12:02:53Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- dragSortReverseTest -->
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:HW4.tests.DragDroppTest@c038203]" name="beforeMethod" is-config="true" duration-ms="262" started-at="2016-12-16T12:02:53Z" finished-at="2016-12-16T12:02:53Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method status="PASS" signature="dragSortTest()[pri:0, instance:HW4.tests.DragDroppTest@c038203]" name="dragSortTest" duration-ms="6810" started-at="2016-12-16T12:02:53Z" finished-at="2016-12-16T12:03:00Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- dragSortTest -->
+        <test-method status="PASS" signature="afterTest()[pri:0, instance:HW4.tests.DragDroppTest@c038203]" name="afterTest" is-config="true" duration-ms="587" started-at="2016-12-16T12:03:00Z" finished-at="2016-12-16T12:03:01Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterTest -->
+      </class> <!-- HW4.tests.DragDroppTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
