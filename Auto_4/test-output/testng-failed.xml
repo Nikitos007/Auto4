@@ -1,67 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Poker Suite]">
-  <parameter name="truePassword" value="123"/>
-  <parameter name="failUsername" value="admin123"/>
-  <parameter name="failPassword" value="12345"/>
-  <parameter name="trueUsername" value="admin"/>
-  <test name="CRUD User Tests(failed)">
+<suite name="Failed suite [Default suite]">
+  <test name="Default test(failed)">
     <classes>
       <class name="HW4.tests.CRUDUserTests">
         <methods>
           <include name="positiveUpdateTest"/>
           <include name="beforeMethod"/>
           <include name="positiveInsertTest"/>
-          <include name="afterSuite"/>
+          <include name="positiveReadTestAfterEditing"/>
           <include name="negativeInsertTest"/>
-          <include name="positiveReadTest"/>
+          <include name="positiveReadTestAfterCreation"/>
           <include name="beforeTest"/>
           <include name="positiveDeleteTest"/>
+          <include name="afterTest"/>
         </methods>
       </class> <!-- HW4.tests.CRUDUserTests -->
-      <class name="HW4.tests.LoginTests">
-        <methods>
-          <include name="beforeTest"/>
-          <include name="beforeMethod"/>
-          <include name="afterTest"/>
-        </methods>
-      </class> <!-- HW4.tests.LoginTests -->
-      <class name="HW4.tests.SearchTest">
-        <methods>
-          <include name="beforeTest"/>
-          <include name="afterTest"/>
-          <include name="beforeMethod"/>
-        </methods>
-      </class> <!-- HW4.tests.SearchTest -->
     </classes>
-  </test> <!-- CRUD User Tests(failed) -->
-  <test name="Search User Tests(failed)">
-    <classes>
-      <class name="HW4.tests.LoginTests">
-        <methods>
-          <include name="beforeTest"/>
-          <include name="beforeMethod"/>
-          <include name="afterTest"/>
-        </methods>
-      </class> <!-- HW4.tests.LoginTests -->
-      <class name="HW4.tests.CRUDUserTests">
-        <methods>
-          <include name="beforeMethod"/>
-          <include name="afterSuite"/>
-          <include name="beforeTest"/>
-        </methods>
-      </class> <!-- HW4.tests.CRUDUserTests -->
-      <class name="HW4.tests.SearchTest">
-        <methods>
-          <include name="beforeTest"/>
-          <include name="afterTest"/>
-          <include name="positiveSearchByEmailTest"/>
-          <include name="beforeMethod"/>
-          <include name="positiveSearchByLastNameTest"/>
-          <include name="positiveSearchByFirstNameTest"/>
-          <include name="positiveSearchByUsernameTest"/>
-        </methods>
-      </class> <!-- HW4.tests.SearchTest -->
-    </classes>
-  </test> <!-- Search User Tests(failed) -->
-</suite> <!-- Failed suite [Poker Suite] -->
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->

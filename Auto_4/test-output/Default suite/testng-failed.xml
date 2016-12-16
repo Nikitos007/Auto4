@@ -8,11 +8,12 @@
           <include name="positiveUpdateTest"/>
           <include name="beforeMethod"/>
           <include name="positiveInsertTest"/>
-          <include name="afterSuite"/>
+          <include name="positiveReadTestAfterEditing"/>
           <include name="negativeInsertTest"/>
-          <include name="positiveReadTest"/>
+          <include name="positiveReadTestAfterCreation"/>
           <include name="beforeTest"/>
           <include name="positiveDeleteTest"/>
+          <include name="afterTest"/>
         </methods>
       </class> <!-- HW4.tests.CRUDUserTests -->
     </classes>

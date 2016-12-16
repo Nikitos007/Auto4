@@ -13,7 +13,7 @@ public class LoginPage {
 	private WebDriver driver;
 	private WebDriverWait wait;
     public static final String URL = "http://80.92.229.236:81/auth/login";
-      
+
     @FindBy(id = "username")
     private WebElement usernameInput;
     @FindBy(id = "password")
@@ -22,7 +22,6 @@ public class LoginPage {
     private WebElement logInBtn;
     @FindBy(xpath = ".//ul[@class='errors']/li")
     private WebElement errorElement;
-
     
     public LoginPage(WebDriver driver) {
         this.driver = driver;
@@ -36,7 +35,6 @@ public class LoginPage {
 
     public void setUsername(String value) {
         //create element and clear and sendKeys
-    	//WebElement usernameInput = driver.findElement(By.id("username"));
     	wait.until(ExpectedConditions.visibilityOf(usernameInput));
         usernameInput.clear();
         usernameInput.sendKeys(value);
@@ -44,17 +42,16 @@ public class LoginPage {
 
     public void setPassword(String value) {
         //create element and clear and sendKeys
-        //WebElement passwordInput = driver.findElement(By.id("password"));
     	wait.until(ExpectedConditions.visibilityOf(passwordInput));
     	passwordInput.clear();
         passwordInput.sendKeys(value);
     }
 
-    public void logIn() {
+    public PlayersPage logIn() {
         //find logIn button and click
-        //WebElement logInBtn = driver.findElement(By.id("logIn"));
-        wait.until(ExpectedConditions.visibilityOf(logInBtn));
+    	wait.until(ExpectedConditions.visibilityOf(logInBtn));
         logInBtn.click();
+        return new PlayersPage(driver);
     }
 
     public String getTitle() {
@@ -62,9 +59,8 @@ public class LoginPage {
     }
 
     public String getErrorMessage() {
-//        WebElement errorElement = driver.findElement(By.xpath(".//ul[@class='errors']/li"));
-        wait.until(ExpectedConditions.visibilityOf(errorElement));
-        return errorElement.getText();
+    	 wait.until(ExpectedConditions.visibilityOf(errorElement));
+         return errorElement.getText();
     }
 
     public void setUsernameUsingJS(String value) {

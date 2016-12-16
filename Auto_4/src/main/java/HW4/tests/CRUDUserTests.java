@@ -2,6 +2,7 @@ package HW4.tests;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
@@ -11,18 +12,32 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import HW4.Entity.User;
-import HW4.pages.EditPlayerPage;
+import HW4.pages.CreateEditPlayerPage;
 import HW4.pages.LoginPage;
 import HW4.pages.PlayersPage;
-
 
 public class CRUDUserTests {
 
 	private WebDriver driver;
-    private EditPlayerPage crudUserPage;
-    private User user;
-    private SoftAssert softAssert;
+    private PlayersPage playersPage;
+
+	//TODO: preview data (you can create dataProvider)
+	private final String username = RandomStringUtils.randomAlphabetic(10);
+	private final String email = RandomStringUtils.randomAlphabetic(10) + "@mail.ru";
+	private final String password = RandomStringUtils.randomAlphabetic(10);
+	private final String firstName = RandomStringUtils.randomAlphabetic(10);
+	private final String lastName = RandomStringUtils.randomAlphabetic(10);
+	private final String city = RandomStringUtils.randomAlphabetic(10);
+	private final String address = RandomStringUtils.randomAlphabetic(10);
+	private final String phone = RandomStringUtils.randomNumeric(10);
+
+	private final String newEmail = RandomStringUtils.randomAlphabetic(10) + "@mail.ru";
+	private final String newFirstName = RandomStringUtils.randomAlphabetic(10);
+	private final String newLastName = RandomStringUtils.randomAlphabetic(10);
+	private final String newCity = RandomStringUtils.randomAlphabetic(10);
+	private final String newAddress = RandomStringUtils.randomAlphabetic(10);
+	private final String newPhone = RandomStringUtils.randomNumeric(10);
+
     /**
 	 * Precondition:
 	 * 1. Open application LoginPage
@@ -32,26 +47,24 @@ public class CRUDUserTests {
     @BeforeSuite
     public void beforeTest() {
         driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(100, TimeUnit.SECONDS);
-        driver.manage().timeouts().setScriptTimeout(100, TimeUnit.SECONDS);
-        LoginPage loginPage = new LoginPage(driver);
+        //wait while driver find element
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
+		LoginPage loginPage = new LoginPage(driver);
         loginPage.open();
         loginPage.setUsername("admin");
         loginPage.setPassword("123");
-        loginPage.logIn();
-        Assert.assertEquals(driver.getTitle(), "Players", "Wrong title after unsuccessful login");
+        playersPage = loginPage.logIn();
+        /*Assert.assertEquals(driver.getTitle(), "Players", "Wrong title after unsuccessful login");
 		this.crudUserPage = new EditPlayerPage(driver);
-		this.user = new User();
-		
+		this.user = new User();*/
     }
-    
+
     @BeforeMethod
 	public void beforeMethod() {
-		new PlayersPage(driver).open();
-		softAssert = new SoftAssert();
+		playersPage.open();
 	}
-
     
     /**
      * Steps to reproduce:
@@ -63,12 +76,36 @@ public class CRUDUserTests {
      */
     @Test
     public void positiveInsertTest() {	
-    	crudUserPage.openInsert();
-    	softAssert.assertEquals(driver.getTitle(), "Players - Insert", "Wrong title after unsuccessful login");
-    	crudUserPage.createUser(user);
-    	softAssert.assertEquals(driver.getTitle(), "Players", "Wrong title after unsuccessful insert");
-    	softAssert.assertAll();
+    	//driver.get("http://80.92.229.236:81/players");
+		CreateEditPlayerPage createPlayerPage = playersPage.clickOnInsert();
+    	Assert.assertEquals(driver.getTitle(), "Players - Insert", "Wrong title after unsuccessful login");
+		createPlayerPage.setUserName(username);
+		createPlayerPage.setEmail(email);
+		createPlayerPage.setPassword(password);
+		createPlayerPage.setConfirmPassword(password);
+		createPlayerPage.setFirstName(firstName);
+		createPlayerPage.setLastName(lastName);
+		createPlayerPage.setCity(city);
+		createPlayerPage.setAddress(address);
+		createPlayerPage.setPhone(phone);
+		createPlayerPage.clickOnSave();
+		Assert.assertEquals(driver.getCurrentUrl(), PlayersPage.URL, "You are NOT on players page.");
     }
+
+	@Test(dependsOnMethods = "positiveReadTestAfterEditing")
+	public void positiveReadTestAfterCreation() {
+		PlayersPage playersPage = new PlayersPage(driver);
+		CreateEditPlayerPage editPlayerPage = playersPage.searchUserClickEdit(username);
+		Assert.assertEquals(driver.getTitle(), "Players - Edit", "Wrong title after unsuccessful insert");
+		Assert.assertEquals(editPlayerPage.getUserName(), username, "username does not match");
+		Assert.assertEquals(editPlayerPage.getEmail(), email, "email does not match");
+		Assert.assertEquals(editPlayerPage.getFirstName(), firstName, "first name matches");
+		Assert.assertEquals(editPlayerPage.getLastName(), lastName, "last name matches");
+		Assert.assertEquals(editPlayerPage.getCity(), city, "city does not match");
+		Assert.assertEquals(editPlayerPage.getAddress(), address, "address matches");
+		Assert.assertEquals(editPlayerPage.getPhone(), phone, "phone does not match");
+		
+	}
     
     /**
      * Steps to reproduce:
@@ -78,18 +115,19 @@ public class CRUDUserTests {
      * 4. Create new user with empty essential fields
      * 5. Verify that title of the page equals to "Players - Insert"
      */
-    @Test (dependsOnMethods = "positiveInsertTest")
+	@Test(dependsOnMethods = "positiveInsertTest")
     public void negativeInsertTest() {	
-    	crudUserPage.openInsert();
-    	softAssert.assertEquals(driver.getTitle(), "Players - Insert", "Wrong title after unsuccessful login");
-    	User user = new User();
-    	user.setUsername("");
-    	user.setEmail("");
-    	user.setPassword("");
-    	user.setPhone("");    	
-    	crudUserPage.createUser(user);
-    	softAssert.assertEquals(driver.getTitle(), "Players - Insert", "Wrong title after unsuccessful insert");
-    	softAssert.assertAll();
+    	//driver.get("http://80.92.229.236:81/players");
+		CreateEditPlayerPage createPlayerPage = playersPage.clickOnInsert();
+    	Assert.assertEquals(driver.getTitle(), "Players - Insert", "Wrong title after unsuccessful login");
+		createPlayerPage.setUserName("");
+		createPlayerPage.setEmail("");
+		createPlayerPage.setPassword("");
+		createPlayerPage.setConfirmPassword("");
+		createPlayerPage.setPhone("");
+		createPlayerPage.clickOnSave();
+    	Assert.assertEquals(driver.getTitle(), "Players - Insert", "Wrong title after unsuccessful insert");
+		//TODO: get list of errors and verify them
     }
     
     /**
@@ -101,15 +139,18 @@ public class CRUDUserTests {
      * 5. Update user
      * 6. Verify that title of the page equals to "Players"
      */
-    @Test (dependsOnMethods = "negativeInsertTest")
+    @Test(dependsOnMethods = "negativeInsertTest")
     public void positiveUpdateTest() {	
-    	PlayersPage playersPage = new PlayersPage(driver);
-    	playersPage.searchUserClickEdit(user.getUsername());
-    	softAssert.assertEquals(driver.getTitle(), "Players - Edit", "Wrong title after unsuccessful insert");
-    	user.newInfoOfUser();
-    	crudUserPage.updateUser(user);
-    	softAssert.assertEquals(driver.getTitle(), "Players", "Wrong title after unsuccessful update");
-    	softAssert.assertAll();
+    	CreateEditPlayerPage editPlayerPage = playersPage.searchUserClickEdit(username);
+		Assert.assertEquals(driver.getTitle(), "Players - Edit", "Wrong title after unsuccessful insert");
+		editPlayerPage.setEmail(newEmail);
+		editPlayerPage.setFirstName(newFirstName);
+		editPlayerPage.setLastName(newLastName);
+		editPlayerPage.setCity(newCity);
+		editPlayerPage.setAddress(newAddress);
+		editPlayerPage.setPhone(newPhone);
+		editPlayerPage.clickOnSave();
+		Assert.assertEquals(driver.getTitle(), "Players", "Wrong title after unsuccessful update");
     }
     
     /**
@@ -120,15 +161,19 @@ public class CRUDUserTests {
      * 4. Read user info
      * 5. Equals fields of user
      */
-    @Test (dependsOnMethods = "positiveDeleteTest")
-    public void positiveReadTest() {	
+    @Test(dependsOnMethods = "positiveDeleteTest")
+    public void positiveReadTestAfterEditing() {
     	PlayersPage playersPage = new PlayersPage(driver);
-    	playersPage.searchUserClickEdit(user.getUsername());
-    	softAssert.assertEquals(driver.getTitle(), "Players - Edit", "Wrong title after unsuccessful insert");
-    	User actualUser = crudUserPage.readUser();
-    	boolean equelsFlagUser = new User().equelsUsers(actualUser, user);
-    	softAssert.assertEquals(equelsFlagUser, true, "Wrong users don't equels");
-    	softAssert.assertAll();
+		CreateEditPlayerPage editPlayerPage = playersPage.searchUserClickEdit(username);
+		Assert.assertEquals(driver.getTitle(), "Players - Edit", "Wrong title after unsuccessful insert");
+		Assert.assertEquals(editPlayerPage.getUserName(), username, "Wrong username.");
+		Assert.assertEquals(editPlayerPage.getEmail(), newEmail, "Wrong email.");
+		Assert.assertEquals(editPlayerPage.getFirstName(), newFirstName, "Wrong first name.");
+		Assert.assertEquals(editPlayerPage.getLastName(), newLastName, "Wrong last name.");
+		Assert.assertEquals(editPlayerPage.getCity(), newCity, "Wrong city.");
+		Assert.assertEquals(editPlayerPage.getAddress(), newAddress, "Wrong address.");
+		Assert.assertEquals(editPlayerPage.getPhone(), newPhone, "Wrong phone.");
+		
     }
     
     /**
@@ -141,17 +186,14 @@ public class CRUDUserTests {
      * 6. Delete this user
      * 7. Verify that title of the page equals to "Players"
      */
-    @Test (dependsOnMethods = "positiveUpdateTest")
+    @Test(dependsOnMethods = "positiveUpdateTest")
     public void positiveDeleteTest() {	
-    	crudUserPage.openInsert();
-    	softAssert.assertEquals(driver.getTitle(), "Players - Insert", "Wrong title after unsuccessful login");
-    	User user = new User();
-    	crudUserPage.createUser(user);
-    	PlayersPage playersPage = new PlayersPage(driver);
-    	playersPage.searchUser(user.getUsername());
-    	crudUserPage.deleteUser(user.getUsername());
-    	softAssert.assertEquals(driver.getTitle(), "Players", "Wrong title after unsuccessful update");
-    	softAssert.assertAll();
+    	playersPage.searchUser(username);
+		Assert.assertEquals(playersPage.getNumberOfUsersWith(username), 1, "Search by username is not working.");
+		playersPage.deleteUser(username);
+    	Assert.assertEquals(driver.getTitle(), "Players", "Wrong title after unsuccessful update");
+		playersPage.searchUser(username);
+		Assert.assertEquals(playersPage.getNumberOfUsersWith(username), 0, "Search by username is not working.");
     }
     
     /**
@@ -159,8 +201,9 @@ public class CRUDUserTests {
      * 1. Close driver
      */
     @AfterSuite
-	public void afterSuite() {
+	public void afterTest() {
 		driver.quit();
+		
 	}
     
 }

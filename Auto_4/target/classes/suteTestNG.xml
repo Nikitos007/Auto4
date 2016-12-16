@@ -6,11 +6,11 @@
 		<parameter name="failUsername" value="admin123"></parameter>
 		<parameter name="truePassword" value="123"></parameter>
 		<parameter name="failPassword" value="12345"></parameter>	
-		<groups>
+		 <groups>
 			<dependencies>
 				<group name="negative" depends-on="positive" />		
 			</dependencies>          
-        </groups>
+        </groups> 
         <classes>
 			<class name="HW4.tests.LoginTests"/>
 		</classes>
@@ -27,5 +27,11 @@
 			<class name="HW4.tests.SearchTest"/>
 		</classes>
 	</test>
- 
+	
+	<test name="Drag_Drop">
+		<classes>
+			<class name="HW4.tests.DragDroppTest"/>
+		</classes>
+	</test>
+	
 </suite>
